@@ -92,6 +92,8 @@ f.write('run_neds = %s\n' % repr(run_neds))
 f.write('run_imgs = %s\n' % repr(run_imgs))
 f.close()
 
+#print(makemake_flags)
+
 subprocess.check_call(['env', 'opp_makemake'] + makemake_flags, cwd='src')
 
 info('Configure done. You can now run "make".')

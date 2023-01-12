@@ -24,13 +24,13 @@
 
 #include <zmq/zmq.hpp>
 #include <omnetpp.h>
-#include "protobuf/veinsgym.pb.h"
+#include "protobuf/simu5g_gym.pb.h"
 
 
 class GymConnection : public omnetpp::cSimpleModule {
 public:
     void initialize() override;
-    veinsgym::proto::Reply communicate(veinsgym::proto::Request request);
+    simu5g_gym::proto::Reply communicate(simu5g_gym::proto::Request request);
 private:
     zmq::context_t context = zmq::context_t(1);
     zmq::socket_t socket = zmq::socket_t(context, zmq::socket_type::req);

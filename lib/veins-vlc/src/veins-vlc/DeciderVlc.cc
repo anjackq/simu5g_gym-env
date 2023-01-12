@@ -32,6 +32,7 @@
 #include "veins-vlc/messages/AirFrameVlc_m.h"
 #include "veins/modules/utility/Consts80211p.h"
 #include "veins-vlc/utility/Utils.h"
+#include "veins-vlc/utility/ConstsVlc.h"
 #include "veins/base/utils/FWMath.h"
 
 #include "veins/base/toolbox/SignalUtils.h"

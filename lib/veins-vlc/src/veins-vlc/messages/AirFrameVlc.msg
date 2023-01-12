@@ -20,12 +20,13 @@
 
 // Based on AirFrame.msg
 
-cplusplus {{
-#include "veins/base/messages/AirFrame_m.h"
-#include "veins-vlc/utility/ConstsVlc.h"
-using veins::AirFrame;
-}}
-class AirFrame;
+
+import veins.base.messages.AirFrame;
+//#include "veins-vlc/utility/ConstsVlc.h"
+//import veins-vlc.utility.ConstVlc;
+
+
+namespace veins;
 
 message AirFrameVlc extends AirFrame {
     int headOrNot;
