@@ -1,0 +1,19 @@
+<configuration>
+  <input>
+    <net-file value="thosa_highway.net.xml"/>
+    <route-files value="thosa_highway_high_traffic.rou.xml"/>
+  </input>
+  <time>
+    <begin value="0"/>
+    <end value="500"/>
+    <step-length value="0.1"/>
+  </time>
+  <random_number>
+        <random value="false"/>
+        <seed value="23423"/>
+        <thread-rngs value="64"/>
+    </random_number>
+  <gui_only>
+    <gui-settings-file value="gui-settings.xml"/>
+   </gui_only>
+</configuration>

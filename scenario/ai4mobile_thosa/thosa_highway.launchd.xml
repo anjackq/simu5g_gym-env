@@ -1,0 +1,6 @@
+<launch>
+  <copy file="thosa_highway.net.xml"/>
+  <copy file="thosa_highway_high_traffic.rou.xml"/>
+  <copy file="thosa_highway.sumocfg" type="config"/>
+  <copy file="gui-settings.xml"/>
+</launch>
