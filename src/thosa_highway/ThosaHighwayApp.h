@@ -18,21 +18,39 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-package serpentine;
-import org.car2x.veins.base.modules.IBaseApplLayer;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+#pragma once
 
-simple SerpentineApp like IBaseApplLayer
-{
-    parameters:
-        @class(veins::serpentine::SerpentineApp);
-        int headerLength = default(88bit) @unit(bit); //header length of the application
-        int beaconLengthBits = default(256bit) @unit(bit); //the length of a beacon packet
-        double beaconInterval = default(1s) @unit(s); //the intervall between 2 beacon messages
-        int beaconUserPriority = default(7); //the user priority (UP) of the beacon messages
-    gates:
-        input lowerLayerIn; // from mac layer
-        output lowerLayerOut; // to mac layer
-        input lowerControlIn;
-        output lowerControlOut;
-}
+#include "veins/veins.h"
+
+#include "veins/base/modules/BaseApplLayer.h"
+#include "veins/modules/utility/TimerManager.h"
+
+namespace veins {
+
+class BaseMobility;
+
+namespace thosa_highway {
+
+class ThosaHighwayApp : public BaseApplLayer {
+public:
+    ~ThosaHighwayApp() override = default;
+
+    // OMNeT++ module interface implementation
+    void initialize(int stage) override;
+    void finish() override;
+    void handleSelfMsg(cMessage* msg) override;
+
+    // CAM sending
+    void beacon();
+    void handleLowerMsg(cMessage* msg) override;
+
+protected:
+    TimerManager timerManager{this};
+    BaseMobility* mobility;
+
+private:
+    bool isFollower = false;
+};
+
+} // namespace serpentine
+} // namespace veins

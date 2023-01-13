@@ -44,11 +44,16 @@ if (len(omnet_args) > 0) and omnet_args[0] == "--":
     omnet_args = omnet_args[1:]
 
 run_libs = [
-    relpath(s) for s in ["lib/veins/src/veins", "lib/simu5g/src/simu5g"]
+    relpath(s) for s in ["lib/veins/src/veins", "lib/veins-vlc/src/veins-vlc",
+                         "lib/simu5g/src/simu5g",
+                         "lib/inet4.4/src/INET"]
 ]
 run_neds = [
     relpath(s)
-    for s in ["src", "lib/veins/src/veins", "lib/simu5g/src/simu5g"]
+    for s in ["src/thosa_highway",
+              "lib/veins/src/veins", "lib/veins-vlc/src/veins-vlc",
+              "lib/simu5g/src", "lib/simu5g/emulation", "lib/simu5g/simulations",
+              "lib/inet4.4/src"]
 ] + ["."]
 run_imgs = [relpath(s) for s in ["lib/veins/images", "lib/simu5g/images"]]
 

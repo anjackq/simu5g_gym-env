@@ -19,7 +19,7 @@
 #pragma once
 
 #include "veins-vlc/Splitter.h"
-#include "serpentine/GymConnection.h"
+#include "thosa_highway/GymConnection.h"
 
 #include <array>
 #include <memory>

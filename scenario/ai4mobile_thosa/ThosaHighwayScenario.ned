@@ -26,13 +26,13 @@ import simu5g.common.binder.Binder;
 //import simu5g.nodes.NR.gNodeB;
 //import simu5g.nodes.cars.NRCar;
 import simu5g.nodes.NR.gNodeB;
-import simu5g.nodes.cars.NRCarGym
+import simu5g.nodes.cars.NRCarGym;
 
 
 // Replace teh VeinsInetManager with TraCImanager, including related modules
 // import org.car2x.veins.subprojects.veins_inet.VeinsInetManager;
 //import org.car2x.veins.base.connectionManager.ConnectionManager;
-//import org.car2x.veins.base.modules.BaseWorldUtility;
+import org.car2x.veins.base.modules.BaseWorldUtility;
 import org.car2x.veins.modules.mobility.traci.TraCIScenarioManager*;
 // import org.car2x.veins.modules.obstacle.ObstacleControl;
 // import org.car2x.veins.modules.obstacle.VehicleObstacleControl;
@@ -48,7 +48,8 @@ network ThosaHighwayScenario
         double playgroundSizeX @unit(m); // x size of the area the nodes are in (in meters)
         double playgroundSizeY @unit(m); // y size of the area the nodes are in (in meters)
         double playgroundSizeZ @unit(m); // z size of the area the nodes are in (in meters)
-        @display("bgb=1500,1500");
+        //@display("bgb=$play1500,1500");
+        @display("bgb=$playgroundSizeX,$playgroundSizeY");
 
     submodules:
 
@@ -60,13 +61,18 @@ network ThosaHighwayScenario
             config = xmldoc("demo.xml");
         }
         
-        /*world: BaseWorldUtility {
+        
+//         connectionManager: ConnectionManager {
+//             parameters:
+//                 @display("p=150,0;i=abstract/multicast");
+//         }
+        world: BaseWorldUtility {
             parameters:
                 playgroundSizeX = veins_eval_by_version(veins_omnetpp_buildnum(), "playgroundSizeX", 1525, "parent.playgroundSizeX");
                 playgroundSizeY = veins_eval_by_version(veins_omnetpp_buildnum(), "playgroundSizeY", 1525, "parent.playgroundSizeY");
                 playgroundSizeZ = veins_eval_by_version(veins_omnetpp_buildnum(), "playgroundSizeZ", 1525, "parent.playgroundSizeZ");
                 @display("p=30,0;i=misc/globe");
-        }*/
+        }
         
         //# Obstacle module
 //         obstacles: ObstacleControl {
@@ -118,7 +124,7 @@ network ThosaHighwayScenario
         }
         
         //# submodule vector to store all cars - will be filled dynamically during simulations
-        car[0]: NRCarGym;
+        node[0]: NRCarGym;
         
         
         connections allowunconnected:

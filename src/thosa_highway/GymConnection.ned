@@ -1,7 +1,9 @@
 //
-// Copyright (C) 2020 Dominik S. Buse <buse@ccs-labs.org>
+// Copyright (C) 2020 Dominik S. Buse <buse@ccs-labs.org>, Max Schettler <schettler@ccs-labs.org>
 //
 // Documentation for these modules is at http://veins.car2x.org/
+//
+// SPDX-License-Identifier: GPL-2.0-or-later
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,39 +20,13 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#pragma once
+package thosa_highway;
 
-#include "veins/veins.h"
 
-#include "veins/base/modules/BaseApplLayer.h"
-#include "veins/modules/utility/TimerManager.h"
-
-namespace veins {
-
-class BaseMobility;
-
-namespace serpentine {
-
-class SerpentineApp : public BaseApplLayer {
-public:
-    ~SerpentineApp() override = default;
-
-    // OMNeT++ module interface implementation
-    void initialize(int stage) override;
-    void finish() override;
-    void handleSelfMsg(cMessage* msg) override;
-
-    // CAM sending
-    void beacon();
-    void handleLowerMsg(cMessage* msg) override;
-
-protected:
-    TimerManager timerManager{this};
-    BaseMobility* mobility;
-
-private:
-    bool isFollower = false;
-};
-
-} // namespace serpentine
-} // namespace veins
+simple GymConnection {
+	@class(GymConnection);
+	string host = default("127.0.0.1"); // tcp port of the gym server
+	int port = default(5555); // tcp port of the gym server
+	string observation_space; // python code to set up the observation space in a gym
+	string action_space; // python code to set up the observation space in a gym
+}
