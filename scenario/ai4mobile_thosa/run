@@ -2,5 +2,5 @@
 # make sure you run '. setenv' in the Simu5G root directory before running this script
  
 #simu5g $*
-exec ../run "$@"
+exec ../../run "$@"
 #/home/anjie/Desktop/simu5g_gym-env/lib/simu5g/bin/simu5g $*

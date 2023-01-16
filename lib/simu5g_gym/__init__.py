@@ -82,13 +82,16 @@ def add_simu5g_root_dir_to_path(simu5g_root_dir):
         warnings.warn("simu5g executable is not found in PATH, trying to add simu5g_root_dir to PATH")
         if simu5g_root_dir is None:
             raise ValueError("No simu5g_root_dir given.")
+
+        sys.path.append(simu5g_root_dir)
+
         if not os.path.isdir(simu5g_root_dir):
             raise ValueError("The simu5g_root_dir does not point to a directory.")
         # if not os.path.exists(os.path.join(simu5g_root_dir, "simu5g")):
         #     raise FileNotFoundError(
         #         "The simu5g_root_dir needs to contain an simu5g executable."
         #     )
-        sys.path.append(simu5g_root_dir)
+
 
     return True
 
@@ -138,7 +141,7 @@ def shutdown_simu5g(process, gracetime_s=1.0):
     process.poll()
     if process.poll() is not None:
         logging.debug(
-            "Simu5G process %d was shut down already with returncode %d.",
+            "Simu5G process %d was shut down already with return code %d.",
             process.pid,
             process.returncode,
         )

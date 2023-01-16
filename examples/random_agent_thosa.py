@@ -16,7 +16,7 @@ def main():
         entry_point="lib.simu5g_gym:Simu5gEnv",
         kwargs={
             "scenario_dir": "../scenario/ai4mobile_thosa",
-            "simu5g_root_dir": "/home/anjie/anaconda3/envs/simu5g_gym/bin"
+            "simu5g_root_dir": "/home/anjie/Desktop/simu5g_gym-env/lib/simu5g/bin"
         },
     )
 
