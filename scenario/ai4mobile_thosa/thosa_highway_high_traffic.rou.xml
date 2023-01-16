@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on Di 30 Aug 2022 14:30:21 CEST by Eclipse SUMO netedit Version 1.6.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="/home/anjie/Desktop/omnetpp_workspace/simu5g/simulations/NR/ai4mobile_thosa/thosa_highway.net.xml"/>
+    </input>
+
+    <output>
+        <output-file value="/home/anjie/Desktop/omnetpp_workspace/simu5g/simulations/NR/ai4mobile_thosa/thosa_highway.net.xml"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="false"/>
+    </processing>
+
+    <junctions>
+        <no-internal-links value="true"/>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.5"/>
+        <rectangular-lane-cut value="false"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="false"/>
+    </pedestrian>
+
+    <netedit>
+        <route-files value="/home/anjie/Desktop/omnetpp_workspace/simu5g/simulations/NR/ai4mobile_thosa/thosa_highway.rou.xml"/>
+    </netedit>
+
+    <report>
+        <aggregate-warnings value="5"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="car" accel="0.8" decel="4.5" sigma="1.0" length="4" minGap="2.5" maxSpeed="50" guiShape="passenger" />
+    <route edges="-gneE1" color="yellow" id="0"/>
+    <route edges="gneE1" color="yellow" id="1"/>
+    
+
+    <flow id="flow0" from="-gneE1" begin="0" end="3600" type="car" probability="0.8" departLane="free" departSpeed="random"/>
+    <flow id="flow1" from="gneE1" begin="0" end="3600" type="car" probability="0.8" departLane="free" departSpeed="random"/>
+
+    
+</routes>

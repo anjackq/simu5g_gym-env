@@ -28,7 +28,7 @@ Define_Module(GymSplitter);
 
 GymSplitter::~GymSplitter() {
     if (gymCon) {
-        veinsgym::proto::Request request;
+        simu5g_gym::proto::Request request;
         request.set_id(1);
 		*(request.mutable_shutdown()) = {};
 		auto response = gymCon->communicate(request);
@@ -54,7 +54,7 @@ void GymSplitter::initialize()
         ASSERT(gymCon);
 
         // update headway if specified
-        double desiredHeadway = par("desiredHeadway");
+        double desiredHeadway = par("desiredHeadway").doubleValue();
         if (desiredHeadway > 0) {
             // set via traci
             const auto manager = veins::TraCIScenarioManagerAccess().get();
@@ -123,8 +123,8 @@ std::array<double, 4> GymSplitter::computeObservation(const TraCIMobility* leade
     };
 }
 
-veinsgym::proto::Request GymSplitter::serializeObservation(const std::array<double, 4> &observation, const double reward) const {
-    veinsgym::proto::Request request;
+simu5g_gym::proto::Request GymSplitter::serializeObservation(const std::array<double, 4> &observation, const double reward) const {
+    simu5g_gym::proto::Request request;
     request.set_id(1);
     auto *values = request.mutable_step()->mutable_observation()->mutable_box()->mutable_values();
     *values = {observation.begin(), observation.end()};

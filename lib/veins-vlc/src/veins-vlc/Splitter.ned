@@ -35,8 +35,10 @@ simple Splitter like ISplitter {
         bool debug = default(false);
         bool draw = default(false);
         bool collectStatistics = default(false);
-        double drawHeadHalfAngle = default(0) @unit(deg);
-        double drawTailHalfAngle = default(0) @unit(deg);
+        //double drawHeadHalfAngle = default(1) @unit(deg);
+        //double drawTailHalfAngle = default(1) @unit(deg);
+        double drawHeadHalfAngle @unit(deg) = default(0deg);
+        double drawTailHalfAngle @unit(deg) = default(0deg);
         
         @signal[totalVlcDelay](type="simtime_t");
         @statistic[totalVlcDelay](record=mean);

@@ -66,6 +66,7 @@ if args.tool == 'memcheck':
 
 cmdline = prefix + [opp_run] + lib_flags + ned_flags + img_flags + omnet_args
 
+
 if args.verbose:
     print "Running with command line arguments: %s" % ' '.join(['"%s"' % arg for arg in cmdline])
 

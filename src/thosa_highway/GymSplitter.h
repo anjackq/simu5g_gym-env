@@ -19,7 +19,7 @@
 #pragma once
 
 #include "veins-vlc/Splitter.h"
-#include "serpentine/GymConnection.h"
+#include "thosa_highway/GymConnection.h"
 
 #include <array>
 #include <memory>
@@ -44,7 +44,7 @@ private:
 
     double computeReward(const GymSplitter* leaderSplitter) const;
     std::array<double, 4> computeObservation(const TraCIMobility* leaderMobility) const;
-    veinsgym::proto::Request serializeObservation(const std::array<double, 4> &observation, double reward) const;
+    simu5g_gym::proto::Request serializeObservation(const std::array<double, 4> &observation, double reward) const;
 
     bool isFollower = false;
     // Problem: Erste transmission

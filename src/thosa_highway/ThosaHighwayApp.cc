@@ -18,7 +18,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#include "serpentine/SerpentineApp.h"
+#include "thosa_highway/ThosaHighwayApp.h"
 
 #include "veins/base/utils/FindModule.h"
 #include "veins/base/modules/BaseMobility.h"
@@ -26,13 +26,13 @@
 #include "veins/modules/messages/DemoSafetyMessage_m.h"
 #include "veins/modules/utility/Consts80211p.h"
 
-Define_Module(veins::serpentine::SerpentineApp);
+Define_Module(veins::thosa_highway::ThosaHighwayApp);
 
 
 namespace veins {
-namespace serpentine {
+namespace thosa_highway {
 
-void SerpentineApp::initialize(int stage)
+void ThosaHighwayApp::initialize(int stage)
 {
     BaseApplLayer::initialize(stage);
 
@@ -55,16 +55,16 @@ void SerpentineApp::initialize(int stage)
     }
 }
 
-void SerpentineApp::finish()
+void ThosaHighwayApp::finish()
 {
 }
 
-void SerpentineApp::handleSelfMsg(cMessage* msg)
+void ThosaHighwayApp::handleSelfMsg(cMessage* msg)
 {
     timerManager.handleMessage(msg);
 }
 
-void SerpentineApp::beacon()
+void ThosaHighwayApp::beacon()
 {
     // just some demo content
     auto* dsm = new DemoSafetyMessage();
@@ -81,7 +81,7 @@ void SerpentineApp::beacon()
     sendDown(dsm);
 }
 
-void SerpentineApp::handleLowerMsg(cMessage* msg)
+void ThosaHighwayApp::handleLowerMsg(cMessage* msg)
 {
     EV_INFO << "Received beacon.\n";
     cancelAndDelete(msg);

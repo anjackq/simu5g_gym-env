@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Runs scenario simulation with simu5g
+Runs scenario simulation with veins and veins-vlc current directory
 """
 
 import os
@@ -13,7 +13,7 @@ def relpath(s):
     return os.path.relpath(os.path.join(root, s), ".")
 
 
-parser = argparse.ArgumentParser("Run a Simu5G simulation")
+parser = argparse.ArgumentParser("Run a Veins-VLC simulation")
 parser.add_argument(
     "-d",
     "--debug",
@@ -32,7 +32,6 @@ parser.add_argument(
     "-v",
     "--verbose",
     action="store_true",
-    default=True,
     help="Print command line before executing",
 )
 parser.add_argument(
@@ -44,20 +43,15 @@ if (len(omnet_args) > 0) and omnet_args[0] == "--":
     omnet_args = omnet_args[1:]
 
 run_libs = [
-    relpath(s) for s in ["lib/veins/src/veins", "lib/veins-vlc/src/veins-vlc",
-                         "lib/simu5g/src/simu5g",
-                         "lib/inet4.4/src/INET"]
+    relpath(s) for s in ["lib/veins/src/veins", "lib/veins-vlc/src/veins-vlc"]
 ]
 run_neds = [
     relpath(s)
-    for s in ["src/thosa_highway",
-              "lib/veins/src/veins", "lib/veins-vlc/src/veins-vlc",
-              "lib/simu5g/src", "lib/simu5g/emulation", "lib/simu5g/simulations",
-              "lib/inet4.4/src"]
+    for s in ["src", "lib/veins/src/veins", "lib/veins-vlc/src/veins-vlc"]
 ] + ["."]
-run_imgs = [relpath(s) for s in ["lib/veins/images", "lib/simu5g/images"]]
+run_imgs = [relpath(s) for s in ["lib/veins/images", "lib/veins-vlc/images"]]
 
-run = "../../src/simu5g_gym_exp" if not args.debug else "../../src/simu5g_gym_exp_dbg"
+run = "../src/experiment" if not args.debug else "../src/experiment_dbg"
 
 lib_flags = ["-l%s" % s for s in run_libs]
 ned_flags = ["-n" + ";".join(run_neds)]

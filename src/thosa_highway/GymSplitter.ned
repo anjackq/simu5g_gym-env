@@ -1,9 +1,5 @@
 //
-// Copyright (C) 2020 Dominik S. Buse <buse@ccs-labs.org>, Max Schettler <schettler@ccs-labs.org>
-//
-// Documentation for these modules is at http://veins.car2x.org/
-//
-// SPDX-License-Identifier: GPL-2.0-or-later
+// Copyright (C) 2019-2020 Dominik S. Buse <buse@ccs-labs.org>, Max Schettler <schettler@ccs-labs.org>
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -18,15 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
 
-package serpentine;
+package thosa_highway;
+import org.car2x.veinsvlc.Splitter;
 
-
-simple GymConnection {
-	@class(GymConnection);
-	string host = default("127.0.0.1"); // tcp port of the gym server
-	int port = default(5555); // tcp port of the gym server
-	string observation_space; // python code to set up the observation space in a gym
-	string action_space; // python code to set up the observation space in a gym
+simple GymSplitter extends Splitter {
+    parameters:
+        @class(GymSplitter);
+        double desiredHeadway @unit(s) = default(-1s); // distance to the leader in seconds (called tau by sumo), not set if negative
+        double successReward = default(1); // Reward for successful transmission of a packet
+        double dsrcCost = default(0.1); // Cost for a transmission via DSRC
+        double vlcCost = default(0.01); // Cost for a transmission via VLC
+        double maxRange @unit(m) = default(1000m);
 }
