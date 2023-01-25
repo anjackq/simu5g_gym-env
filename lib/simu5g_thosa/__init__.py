@@ -23,7 +23,7 @@
 #
 
 """
-Simu5G-Gym base structures to create gym environments from simu5g simulations.
+Simu5G-THOSA base structures from simu5g simulations.
 """
 
 import atexit
@@ -41,7 +41,7 @@ import zmq
 from gym import error, spaces, utils
 from gym.utils import seeding
 
-from . import simu5g_gym_pb2
+from . import simu5g_thosa_pb2
 
 SENTINEL_EMPTY_SPACE = gym.spaces.Space()
 SENTINEL_NO_SEED_GIVEN = "NO SEED GIVEN"  # replace with pep 661 once ready
@@ -91,7 +91,6 @@ def add_simu5g_root_dir_to_path(simu5g_root_dir):
         #     raise FileNotFoundError(
         #         "The simu5g_root_dir needs to contain an simu5g executable."
         #     )
-
 
     return True
 
@@ -166,33 +165,52 @@ def shutdown_simu5g(process, gracetime_s=1.0):
     ), "Simu5g could not be killed."
 
 
-def serialize_action_discete(action):
+# def serialize_action_discete(action):
+#     """Serialize a single discrete action into protobuf wire format."""
+#     reply = simu5g_thosa_pb2.Reply()
+#     reply.action.discrete.value = action
+#     return reply.SerializeToString()
+
+
+# def parse_space(space):
+#     """Parse a Gym.spaces.Space from a protobuf request into python types."""
+#     if space.HasField("discrete"):
+#         return space.discrete.value
+#     if space.HasField("box"):
+#         return np.array(space.box.values, dtype=np.float32)
+#     if space.HasField("multi_discrete"):
+#         return np.array(space.multi_discrete.values, dtype=int)
+#     if space.HasField("multi_binary"):
+#         return np.array(space.multi_binary.values, dtype=bool)
+#     if space.HasField("tuple"):
+#         return tuple(parse_space(subspace) for subspace in space.tuple.values)
+#     if space.HasField("dict"):
+#         return {
+#             item.key: parse_space(item.space) for item in space.dict.values
+#         }
+#     raise RuntimeError("Unknown space type")
+
+def serialize_data_discete(data):
     """Serialize a single discrete action into protobuf wire format."""
-    reply = simu5g_gym_pb2.Reply()
-    reply.action.discrete.value = action
+    reply = simu5g_thosa_pb2.Reply()
+    reply.data.traffic_data.time_step = 1
+    reply.data.traffic_data.veh_id = 1
+    reply.data.traffic_data.last_pos_x = 1
+    reply.data.traffic_data.last_pos_y = 10
+    reply.data.traffic_data.last_velocity = 13
+    reply.data.traffic_data.orientation = 1
+    reply.data.traffic_data.distance_to_serving_gnodeb = 1
     return reply.SerializeToString()
 
+def parse_data(data):
+    """Parse Data from a protobuf request into python types."""
+    if data.HasField("traffic_data"):
+        return data.traffic_data
 
-def parse_space(space):
-    """Parse a Gym.spaces.Space from a protobuf request into python types."""
-    if space.HasField("discrete"):
-        return space.discrete.value
-    if space.HasField("box"):
-        return np.array(space.box.values, dtype=np.float32)
-    if space.HasField("multi_discrete"):
-        return np.array(space.multi_discrete.values, dtype=int)
-    if space.HasField("multi_binary"):
-        return np.array(space.multi_binary.values, dtype=bool)
-    if space.HasField("tuple"):
-        return tuple(parse_space(subspace) for subspace in space.tuple.values)
-    if space.HasField("dict"):
-        return {
-            item.key: parse_space(item.space) for item in space.dict.values
-        }
-    raise RuntimeError("Unknown space type")
+    raise RuntimeError("Unknown Data type")
 
 
-class Simu5gEnv(gym.Env):
+class Simu5gEnv():
     metadata = {"render.modes": []}
 
     default_scenario_dir = None
@@ -210,7 +228,7 @@ class Simu5gEnv(gym.Env):
             port=None,
             timeout=3.0,
             print_simu5g_stdout=True,
-            action_serializer=serialize_action_discete,
+            data_serializer=serialize_data_discete(),
             simu5g_kwargs=None,
             user_interface="Cmdenv",
             config="General",
@@ -222,10 +240,10 @@ class Simu5gEnv(gym.Env):
             simu5g_root_dir = self.default_simu5g_root_dir
         assert add_simu5g_root_dir_to_path(simu5g_root_dir)
         self.scenario_dir = scenario_dir
-        self._action_serializer = action_serializer
+        self._data_serializer = data_serializer
 
-        self.action_space = SENTINEL_EMPTY_SPACE
-        self.observation_space = SENTINEL_EMPTY_SPACE
+        # self.action_space = SENTINEL_EMPTY_SPACE
+        # self.observation_space = SENTINEL_EMPTY_SPACE
 
         self.context = zmq.Context()
         self.socket = self.context.socket(zmq.REP)
@@ -392,7 +410,7 @@ class Simu5gEnv(gym.Env):
         return self.socket.recv()
 
     def _parse_request(self, data):
-        request = simu5g_gym_pb2.Request()
+        request = simu5g_thosa_pb2.Request()
         request.ParseFromString(data)
         if request.HasField("shutdown"):
             return StepResult(self.observation_space.sample(), 0.0, True, {})
@@ -401,11 +419,11 @@ class Simu5gEnv(gym.Env):
             self.action_space = eval(request.init.action_space_code)
             self.observation_space = eval(request.init.observation_space_code)
             # sent empty reply
-            init_msg = simu5g_gym_pb2.Reply()
+            init_msg = simu5g_thosa_pb2.Reply()
             self.socket.send(init_msg.SerializeToString())
             # request next request (actual request with content)
             real_data = self._recv_request()
-            real_request = simu5g_gym_pb2.Request()
+            real_request = simu5g_thosa_pb2.Request()
             real_request.ParseFromString(real_data)
             # continue processing the real request
             request = real_request

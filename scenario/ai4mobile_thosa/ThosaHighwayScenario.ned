@@ -26,7 +26,7 @@ import simu5g.common.binder.Binder;
 //import simu5g.nodes.NR.gNodeB;
 //import simu5g.nodes.cars.NRCar;
 import simu5g.nodes.NR.gNodeB;
-import simu5g.nodes.cars.NRCarGym;
+import thosa_highway.nodes.NRCarGym;
 
 
 // Replace teh VeinsInetManager with TraCImanager, including related modules

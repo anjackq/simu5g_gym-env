@@ -42,7 +42,7 @@ message Reply {
   }
 }
 
-message Init {  // allways a request
+message Init {  // always a request
   string action_space_code = 1;
   string observation_space_code = 2;
   string reward_space_code = 3;

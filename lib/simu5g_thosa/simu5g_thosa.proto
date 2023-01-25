@@ -22,25 +22,25 @@
 
 syntax = "proto3";
 
-package simu5g_gym.proto;
+package simu5g_thosa.proto;
 
 import "google/protobuf/timestamp.proto";
 
 message Request {
   uint64 id = 1;
   oneof payload {
-    //Init init = 2;
+    Init init = 2;
     Shutdown shutdown = 3;
-    Step step = 4;
+    PQos pQos = 4;
   }
 }
 
 message Reply {
   uint64 id = 1;
   oneof payload {
-    //Init init = 2;
+    Init init = 2;
     Shutdown shutdown = 3;
-    Space action = 4;
+    Data data = 4;
   }
 }
 
@@ -49,7 +49,7 @@ message Shutdown {
 }
 
 message Data {
-  repeated TrafficData traffic_data = 1;
+  TrafficData traffic_data = 1;
   //NetworkData network_data = 2; // To be implemented later
   google.protobuf.Timestamp last_updated = 3;
 }
@@ -64,9 +64,20 @@ message TrafficData {
   double distance_to_serving_gnodeb = 7;
 }
 
+message Init {
+  string action_space_code = 1;
+  string observation_space_code = 2;
+  string reward_space_code = 3;
+}
 
+message PQos {
+  message Item {
+    double time_step = 1;
+    double voip_throughput = 2;
+  }
 
-
+  repeated Item values = 1;
+}
 
 //
 //message Request {
